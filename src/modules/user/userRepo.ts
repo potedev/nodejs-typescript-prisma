@@ -13,18 +13,13 @@ export class UserRepo {
 
         const exists = await this.exists(userProps.email);
 
-        console.log('exist ???',exists);
-
         if (!exists) {
-            console.log('lollllll');
-            let user = await UserEntity.create(
+            await UserEntity.create(
                 {
                     data: {
                         email:userProps.email
                     }
                 })
-
-            console.log('created user ? ', user);
         }
 
         return
@@ -32,9 +27,6 @@ export class UserRepo {
 
     public async exists(email: string): Promise<boolean> {
         const UserEntity = this.entities.user;
-
-        console.log(UserEntity)
-        console.log(email)
 
         const result = await UserEntity.findUnique({ where: { email: email } })
 
